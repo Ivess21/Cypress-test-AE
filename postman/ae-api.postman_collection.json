@@ -1,0 +1,188 @@
+{
+  "info": {
+    "_postman_id": "c2303734-d2e2-4e7e-9b7c-a0d2cba4790e",
+    "name": "Automation practice",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34863280"
+  },
+  "item": [
+    {
+      "name": "Product list",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Validar que la respuesta sea 200\", function () {\n    pm.response.to.have.status(200);\n});\npm.test(\"Tiempo de respuesta menor a 3500ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(3500);\n});\npm.test(\"La respuesta contiene la lista de productos\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"products\");\n    pm.expect(jsonData.products.length).to.be.above(0);\n});\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://automationexercise.com/api/productsList",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productsList"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search Product - Búsqueda exitosa por término (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();\n\npm.test(\"El código interno de respuesta es 200\", function () {\n    pm.expect(jsonData.responseCode).to.eql(200);\n});\n\npm.test(\"Devuelve al menos un producto coincidente\", function () {\n    pm.expect(jsonData.products).to.be.an(\"array\").that.is.not.empty;\n});\n\npm.test(\"Todos los productos coinciden en nombre o categoría con el término buscado\", function () {\n    jsonData.products.forEach((producto) => {\n        const enNombre = producto.name.toLowerCase().includes(\"top\");\n        const enCategoria = producto.category && producto.category.category.toLowerCase().includes(\"top\");\n        pm.expect(enNombre || enCategoria).to.be.true;\n    });\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "search_product",
+              "value": "top",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://automationexercise.com/api/searchProduct",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "searchProduct"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search Product - Error por parámetro faltante (400)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();\n\npm.test(\"Devuelve responseCode 400 por parámetro faltante\", function () {\n    pm.expect(jsonData.responseCode).to.eql(400);\n});\n\npm.test(\"El mensaje de error indica el parámetro requerido\", function () {\n    pm.expect(jsonData.message).to.eql(\"Bad request, search_product parameter is missing in POST request.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://automationexercise.com/api/searchProduct",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "searchProduct"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Login - Error con usuario inexistente (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();\n\npm.test(\"Devuelve responseCode 404 para usuario inexistente\", function () {\n    pm.expect(jsonData.responseCode).to.eql(404);\n});\n\npm.test(\"Muestra el mensaje de usuario no encontrado\", function () {\n    pm.expect(jsonData.message).to.eql(\"User not found!\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "email",
+              "value": "usuario_falso_qa@test.com"
+            },
+            {
+              "key": "password",
+              "value": "ClaveIncorrecta123"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://automationexercise.com/api/verifyLogin",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "verifyLogin"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Products List - Método POST no permitido (405)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();\n\npm.test(\"Bloquea métodos no permitidos con responseCode 405\", function () {\n    pm.expect(jsonData.responseCode).to.eql(405);\n    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "https://automationexercise.com/api/productsList",
+          "protocol": "https",
+          "host": [
+            "automationexercise",
+            "com"
+          ],
+          "path": [
+            "api",
+            "productsList"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
