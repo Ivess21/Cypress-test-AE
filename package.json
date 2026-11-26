@@ -1,7 +1,7 @@
 {
   "name": "cypress-test-store",
   "version": "1.0.0",
-  "description": "Practica de automatizacion de prubas",
+  "description": "Practica de automatizacion de pruebas",
   "author": "Acosta Ives",
   "type": "commonjs",
   "main": "index.js",
