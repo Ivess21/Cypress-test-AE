@@ -4,17 +4,14 @@
   "description": "Practica de automatizacion de pruebas",
   "author": "Acosta Ives",
   "type": "commonjs",
-  "main": "index.js",
   "scripts": {
     "pruebas-chrome": "cypress run --spec cypress/e2e/smoketestae.cy.js --browser chrome",
     "pruebas-firefox": "cypress run --spec cypress/e2e/smoketestae.cy.js --browser firefox",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pruebas-api": "newman run postman/ae-api.postman_collection.json"
-  },
-  "dependencies": {
-    "cypress": "^16.3.0"
-  },
+    "pruebas-api": "newman run postman/ae-api.postman_collection.json",
+    "test": "npm run pruebas-chrome && npm run pruebas-api"
+},
   "devDependencies": {
+    "cypress": "^16.4.0",
     "newman": "^6.2.3"
   }
 }
