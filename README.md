@@ -19,8 +19,8 @@ Cypress-test-AE/
 │   ├── cypress-ui-contacto.png
 │   ├── cypress-ui-resumen.png
 │   ├── newman-api-falla-503.png
-│   └── newman-api-ok.png
-│   └── cypress-ui-terminal
+│   ├── newman-api-ok.png
+│   └── cypress-ui-terminal.png
 ├── postman/
 │   └── ae-api.postman_collection.json  # Colección de API
 ├── .gitignore
@@ -96,9 +96,14 @@ npx cypress install
 
 ![Corrida de Newman con 2 scripts fallidos](./evidencias/newman-api-falla-503.png)
 
-### Interfaz (Cypress Test Runner)
 
-Smoke test de interfaz: **4 tests aprobados y 0 fallidos**.
+### Interfaz (Cypress), 27/11/2026
+
+**Corrida con `npm run pruebas-chrome`:** 4 tests aprobados y 0 fallidos, en Chrome 158 (headless) con Node.js v24.22.1.
+
+![Resumen en terminal de Cypress: 4 tests aprobados](./evidencias/cypress-ui-terminal.png)
+
+Las siguientes capturas muestran el detalle en Cypress Test Runner.
 
 ![Resumen de Cypress: 4 tests aprobados](./evidencias/cypress-ui-resumen.png)
 
