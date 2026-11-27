@@ -14,6 +14,13 @@ Cypress-test-AE/
 │   └── support/
 │       ├── commands.js                 # Plantilla sin comandos personalizados
 │       └── e2e.js                      # Archivo de soporte
+├── evidencias/
+│   ├── cypress-ui-carrito.png
+│   ├── cypress-ui-contacto.png
+│   ├── cypress-ui-resumen.png
+│   ├── newman-api-falla-503.png
+│   └── newman-api-ok.png
+│   └── cypress-ui-terminal
 ├── postman/
 │   └── ae-api.postman_collection.json  # Colección de API
 ├── .gitignore
@@ -65,6 +72,7 @@ En `cypress run`, cada test fallido se puede reintentar hasta 2 veces. En modo i
 git clone https://github.com/Ivess21/Cypress-test-AE.git
 cd Cypress-test-AE
 npm ci
+npx cypress install
 ```
 
 ## Ejecución
@@ -75,6 +83,32 @@ npm ci
 | `npm run pruebas-firefox` | Interfaz en Firefox |
 | `npm run pruebas-api` | API con Newman |
 | `npm test` | Interfaz en Chrome y, si pasa, API |
+
+## Evidencia de ejecución
+
+### API (Newman), 27/11/2026
+
+**Corrida exitosa:** 5 requests y 11 aserciones ejecutadas, sin fallas.
+
+![Corrida exitosa de Newman: 11 aserciones sin fallas](./evidencias/newman-api-ok.png)
+
+**Incidente observado en la corrida anterior:** 2 scripts fallaron con `JSONError` y se ejecutaron solo 6 de las 11 aserciones. La request sin el parámetro de búsqueda respondió `503 Service Unavailable`. La corrida siguiente pasó; la causa no está determinada.
+
+![Corrida de Newman con 2 scripts fallidos](./evidencias/newman-api-falla-503.png)
+
+### Interfaz (Cypress Test Runner)
+
+Smoke test de interfaz: **4 tests aprobados y 0 fallidos**.
+
+![Resumen de Cypress: 4 tests aprobados](./evidencias/cypress-ui-resumen.png)
+
+**Formulario de contacto:** validación del diálogo de confirmación y del mensaje de éxito.
+
+![Validaciones del formulario de contacto](./evidencias/cypress-ui-contacto.png)
+
+**Carrito:** validación de productos, precios, cantidades y totales por fila.
+
+![Validaciones del carrito](./evidencias/cypress-ui-carrito.png)
 
 ## Autor
 
